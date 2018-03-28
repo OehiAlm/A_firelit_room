@@ -6,7 +6,4 @@
         xmlns:local="clr-namespace:a_firelit_room"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
 </Window>

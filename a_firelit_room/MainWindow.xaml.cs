@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace a_firelit_room
 {
@@ -20,9 +12,21 @@ namespace a_firelit_room
     /// </summary>
     public partial class MainWindow : Window
     {
+        Flow Game;
+        
+        public delegate void GameDelegate(object sender, EventArgs e);  //Delegate, was benötigt wird, um sich auf den Render Thread zu registrieren
+
         public MainWindow()
         {
             InitializeComponent();
+
+            CompositionTarget.Rendering += Update;    //Registrieren des vorher erstellten Delegates auf den WPF Render Thread
+            Game = new Flow();
+        }
+
+        void Update(object sender, EventArgs e)
+        {
+            Game.Update();  //Weitergeben der Kontrolle, über was jeden Tick gemacht werden muss an die eigene Game Flow Klasse
         }
     }
 }
