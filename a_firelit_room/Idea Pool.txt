@@ -2,7 +2,10 @@ Whats the Story progress?
 - Tom findet ein Stück Holz und zündet es an (wie?)
 - Tom erkundet weiter. Er findet Papier auf dem Boden. Es scheint eine Zeitung zu sein.
 - Er hält sie nah an den Stock und sieht Schriftzeichen, die er nicht entziffern kann.
-
+- Er knüllt mehrere Papiere zusammen und legt sie an auf dem Boden zusammen
+- Im schnell aufflackernden Feuerschein sieht er Bretter in der Nähe liegen
+- Außerdem kann er einen Arm einer Person ausmachen
+- Zur Person gehen? Feuer anfachen?
 
 How can I improve Debuggin'?
 - Start from a specific Story Arc with specified parameters
