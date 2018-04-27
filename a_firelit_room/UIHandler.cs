@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Media;
 
 namespace a_firelit_room
@@ -10,15 +12,17 @@ namespace a_firelit_room
     internal class UIHandler
     {
         Flow GameFlow;
+        Dictionary<Button, SByte> ButtonClicks;
 
         internal Window MainWindow { get; private set; }
         internal Panel WindowCanvas { get; private set; }
 
-        internal StringBuilder OutputString { get; private set; }
+        /////////     Constructor     /////////
 
         internal UIHandler(Flow reference)
         {
             GameFlow = reference;
+            ButtonClicks = new Dictionary<Button, sbyte>();
 
             MainWindow = Application.Current.MainWindow;
             MainWindow.ResizeMode = ResizeMode.CanMinimize;
@@ -27,32 +31,42 @@ namespace a_firelit_room
             WindowCanvas = new Canvas();
             MainWindow.Content = WindowCanvas;
 
-            OutputString = new StringBuilder();
+            TextManager.OnRemoveString += RemoveTextFromOutputBox;
+            TextManager.OnTextBoxUpdate += UpdateRunOpacity;
         }
 
-        internal Button AddButton(string button_Name, string button_Content, Panel panel, int width = 120, int height = 35)
-        {
-            Button button = new Button()
-            {
-                Name = button_Name,
-                Content = button_Content,
-                Width = width,
-                Height = height
-            };
-            
-            panel.Children.Add(button);
+        /*/////////////////////////////////////////////
+                        Get methods
+        ////////////////////////////////////////////*/
 
-            return button;
+        internal FrameworkElement GetElementFromWindowCanvas(string Name)
+        {
+            foreach (FrameworkElement element in WindowCanvas.Children)     //only good, if the number of Children stays small (which it should - 4.4.18)
+            {
+                if (element.Name == Name)
+                    return element;
+            }
+
+            throw new KeyNotFoundException("Framework Element Name: '" + Name + "' not found in WindowCanvas Children Collection! Did you misstype it at the calling site?");
+        }
+
+        /*/////////////////////////////////////////////
+                    Create & Add UI Elements
+        ////////////////////////////////////////////*/
+
+        SolidColorBrush CreateSolidColorBrush(byte opacity = 255, byte red = 255, byte green = 255, byte blue = 255)
+        {
+            return new SolidColorBrush(Color.FromArgb(opacity,red,green,blue));
         }
 
         internal Panel CreateMainButtonPanel (string Name)
         {
             Panel MainButtonPanel = new StackPanel()
             {
-                Name = "MainButtonPanel",
-                Height = 500,
-                Width = 150,
-                Background = Brushes.Black
+                Name            = "MainButtonPanel",
+                Height          = 500,
+                Width           = 150,
+                Background      = Brushes.Black,
             };
 
             MainButtonPanel.Margin = new Thickness(WindowCanvas.Width - MainButtonPanel.Width, 10, 0, 0);
@@ -64,43 +78,188 @@ namespace a_firelit_room
         {
             TextBlock TextOutputElement = new TextBlock()
             {
-                Name = "TextOutputPanel",
-                Height = WindowCanvas.Height,
-                Width = WindowCanvas.Width,
-                Background = Brushes.Black,
-                Foreground = Brushes.White,
-                Text = OutputString.ToString()
+                Name            = "TextOutputPanel",
+                Height          = WindowCanvas.Height,
+                Width           = WindowCanvas.Width,
+                Background      = Brushes.Black,
+                Foreground      = Brushes.White,
+                TextTrimming    = TextTrimming.WordEllipsis,
+                TextWrapping    = TextWrapping.Wrap,
             };
 
             WindowCanvas.Children.Add(TextOutputElement);
             return TextOutputElement;
         }
-        
-        internal FrameworkElement GetElementFromWindowCanvas (string Name)
-        {
-            foreach (FrameworkElement element in WindowCanvas.Children)
-            {
-                if (element.Name == Name)
-                    return element;
-            }
 
-            KeyNotFoundException exception = new KeyNotFoundException(Name + " not found in Collection. New Element returned");
-            return new FrameworkElement();
+        internal Button AddButton(string button_Name, string button_Content, Panel panel, Action<object, EventArgs> click_event, int width = 120, int height = 35)
+        {
+            Button button = new Button()
+            {
+                Name    = button_Name,
+                Content = button_Content,
+                Width   = width,
+                Height  = height
+            };
+
+            button.Click += new RoutedEventHandler(click_event);
+            ButtonClicks.Add(button, 0);
+            panel.Children.Add(button);
+            
+            return button;
         }
 
-        internal Panel AdjustWindowCanvas (int width, int height, SolidColorBrush brush)
+        /*/////////////////////////////////////////////
+                        Add Text methods
+        ////////////////////////////////////////////*/
+
+        internal string AddTextToOutputBox(params string[] texts)
         {
-            WindowCanvas.Height = width;
-            WindowCanvas.Width = height;
+            TextBlock TextOutputElement = (TextBlock)GetElementFromWindowCanvas("TextOutputPanel");
+
+            for (int i = texts.Length - 1; i >= 0; --i)
+            {
+                Run run = new Run()
+                {
+                    Foreground = CreateSolidColorBrush(),
+                    Text = texts[i] + Environment.NewLine,
+                };
+
+                if (i == 0)
+                    run.Text = run.Text.Insert(0,Environment.NewLine);
+
+                if (TextOutputElement.Inlines.Count != 0)
+                    TextOutputElement.Inlines.InsertBefore(TextOutputElement.Inlines.FirstInline, run);
+                else
+                    TextOutputElement.Inlines.Add(run);
+
+                TextManager.TrackLifeTimeObject(run);
+            }
+            
+            return TextOutputElement.Text;
+        }
+
+        /*/////////////////////////////////////////////
+                    Update Text methods
+        ////////////////////////////////////////////*/
+
+        void UpdateRunOpacity(double lifetime, Run item)
+        {
+            if (lifetime < 500)
+                item.Foreground.Opacity = lifetime / 250;
+        }
+
+        /*/////////////////////////////////////////////
+                     Remove Text methods
+        ////////////////////////////////////////////*/
+
+        internal void RemoveTextFromOutputBox(Run run_to_be_removed)
+        {
+            TextBlock TextOutputElement = (TextBlock)GetElementFromWindowCanvas("TextOutputPanel");
+            TextOutputElement.Inlines.Remove(run_to_be_removed);
+        }
+
+        /*/////////////////////////////////////////////
+                        Adjust UI Elements
+        ////////////////////////////////////////////*/
+
+        internal Panel AdjustWindowCanvasSize (double width = -1, double height = -1)
+        {
+            if (width >= 0)
+                WindowCanvas.Width = width;
+
+            if (height >= 0)
+                WindowCanvas.Height = height;
+
+            return WindowCanvas;
+        }
+
+        internal Panel SetWindowCanvasColor(SolidColorBrush brush)
+        {
             WindowCanvas.Background = brush;
             return WindowCanvas;
         }
 
-        internal string AddTextToOutputBox(string text, TextBlock textOutputElement)
+        internal TextBlock AdjustTextOutputElementSize (double width = Double.NaN, double height = Double.NaN)
         {
-            OutputString.AppendLine(text);
-            textOutputElement.Text = OutputString.ToString();
-            return textOutputElement.Text;
+            TextBlock TextOutputElement = (TextBlock)GetElementFromWindowCanvas("TextOutputPanel");
+
+            if(width != Double.NaN)
+                TextOutputElement.Width = width;
+
+            if (height != Double.NaN)
+                TextOutputElement.Height = height;
+
+            return TextOutputElement;
         }
+
+        internal TextBlock SetTextOutputBackgroundColor(SolidColorBrush brush)
+        {
+            TextBlock TextOutputElement = (TextBlock)GetElementFromWindowCanvas("TextOutputPanel");
+            TextOutputElement.Background = brush;
+            return TextOutputElement;
+        }
+
+        /*/////////////////////////////////////////////
+                        Event Actions
+        ////////////////////////////////////////////*/
+
+        internal void KindleButtonClick (object sender, EventArgs args)
+        {
+            Button button = (Button)sender;
+            ButtonClicks[button]++;
+            
+            switch (ButtonClicks[button])
+            {
+                case 1:
+                {
+                    AddTextToOutputBox(TextManager.GetTexts(EUIEventNames.LIGHTMATCHSTICK_ACTION, lines_of_text: 3));
+                    break;
+                }
+
+                case 2:
+                {
+                    AddTextToOutputBox(TextManager.GetTexts(EUIEventNames.LIGHTMATCHSTICK_ACTION, 3, 3));
+                    GameFlow.Events.AdvanceToNextEventPhase();
+                    break;
+                }
+
+                case 3:
+                {
+                    AddTextToOutputBox(TextManager.GetTexts(EUIEventNames.LIGHTMATCHSTICK_ACTION, starting_from_index: 6));
+                    button.IsEnabled = false;
+                    break;
+                }
+            }
+        }
+
+        internal void PickupStick(object sender, EventArgs args)
+        {
+            //    Button button = (Button)sender;
+            //    ButtonClicks[button]++;
+
+            //    switch (ButtonClicks[button])
+            //    {
+            //    case 1:
+            //        {
+            //            AddTextToOutputBox(TextManager.GetTexts(EUIEventNames.LIGHTMATCHSTICK_ACTION, 2));
+            //            break;
+            //        }
+
+            //    case 2:
+            //        {
+            //            AddTextToOutputBox(TextManager.GetTexts(EUIEventNames.LIGHTMATCHSTICK_ACTION, 1, 2));
+            //            break;
+            //        }
+
+            //    case 3:
+            //        {
+            //            AddTextToOutputBox(TextManager.GetTexts(EUIEventNames.LIGHTMATCHSTICK_ACTION, 2, 3));
+            //            button.IsEnabled = false;
+            //            GameFlow.Events.AdvanceToNextEventPhase();
+            //            break;
+            //        }
+            //    }
+        }
+
     }
 }

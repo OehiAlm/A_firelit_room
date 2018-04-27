@@ -55,7 +55,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Flow.cs" />
-    <Compile Include="GameEvents.cs" />
+    <Compile Include="GameEventsClass.cs" />
+    <Compile Include="GameEventsData.cs" />
+    <Compile Include="TextManager.cs" />
     <Compile Include="UIHandler.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

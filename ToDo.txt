@@ -1,0 +1,34 @@
+
+
+Tier 0 -> (Errors auflösen)
+::::::
+
+
+
+Tier 1 -> (Wichtigste Gameplay Features)
+::::::
+
+
+
+
+Tier 2 -> (Potentiell wichtige Features)
+::::::
+- Immer die letzten paar Lines of Text im Log behalten
+
+
+
+Tier 3 -> (Kosmetische Features)
+::::::
+- Farben einführen (für Aktionen, die der Spieler ausführt)
+- Text-Animation hinzufügen -> Vor allem bei mehreren Lines of Text
+
+? Anderen Typ Textbox nutzen (Rich-Textbox zb.) ??
+
+
+
+Done
+::::::
+- 2-dimensionales Array für Events einsetzen, anstatt eine Liste in einer Liste
+- Event Timer für bestimmte Timed Events erst ab bestimmten Aktionen starten
+- Runs anstatt Strings für Manipulation des Textblocks herumreichen (alle methoden anpassen :P)
+- Text verschwinden lassen, wenn er zu lange im Log steht
