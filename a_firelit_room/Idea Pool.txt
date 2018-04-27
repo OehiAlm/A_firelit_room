@@ -6,6 +6,7 @@ Whats the Story progress?
 - Im schnell aufflackernden Feuerschein sieht er Bretter in der Nähe liegen
 - Außerdem kann er einen Arm einer Person ausmachen
 - Zur Person gehen? Feuer anfachen?
+- Muss sich um die Person kümmern, das ist das neue implizite Ziel
 
 How can I improve Debuggin'?
 - Start from a specific Story Arc with specified parameters
