@@ -2,11 +2,32 @@ Whats the Story progress?
 - Tom findet ein Stück Holz und zündet es an (wie?)
 - Tom erkundet weiter. Er findet Papier auf dem Boden. Es scheint eine Zeitung zu sein.
 - Er hält sie nah an den Stock und sieht Schriftzeichen, die er nicht entziffern kann.
-- Er knüllt mehrere Papiere zusammen und legt sie an auf dem Boden zusammen
+- Er knüllt mehrere Papiere zusammen und legt sie nah auf dem Boden zusammen
 - Im schnell aufflackernden Feuerschein sieht er Bretter in der Nähe liegen
+
+(!) Schnellfassung
+  - Das feuert brennt schon, als Tom erwacht
+
 - Außerdem kann er einen Arm einer Person ausmachen
 - Zur Person gehen? Feuer anfachen?
 - Muss sich um die Person kümmern, das ist das neue implizite Ziel
+
+Wo startet der Spieler?
+- In einer großen Halle / (Flugzeug-)Hangar
+- Bunker
+- Garage
+- Keller
+- Straße (draußen)
+
+Survival-Szenarien für die Overworld
+- Draußen stürmt es (Wasser und Wind) => braucht Schutzkleidung / wärmende Kleidung
+- Es ist immer dunkel => braucht Fackel / Lichtquelle
+- Es ist brutal kalt => braucht wärmende Kleidung
+- Nebel / Rauch => Es braucht Mundschutz / Atemmaske
+- Es gibt eine dunkle Bedrohung / Monster etc. => Braucht 'vorsichtiges Vorgehen' //noch unklar
+
+
+
 
 How can I improve Debuggin'?
 - Start from a specific Story Arc with specified parameters
