@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace a_firelit_room
 {
@@ -11,6 +9,7 @@ namespace a_firelit_room
     {
         GAMESTART,
         LOOKAROUND,
+        LOOKAROUND_OPTION,
         FINDMATCHSTICKS,
         LIGHTMATCHSTICK_OPTION,
         INSPECTSURROUNDINGAREA,
@@ -61,9 +60,9 @@ namespace a_firelit_room
         
         void CreateGameEvents()
         {
-            UIGameEventList.Add(new UIGameEvent(EUIEventNames.LIGHTMATCHSTICK_ACTION,       UI.KindleButtonClick));
+            /*UIGameEventList.Add(new UIGameEvent(EUIEventNames.LIGHTMATCHSTICK_ACTION,       UI.KindleButtonClick));
             UIGameEventList.Add(new UIGameEvent(EUIEventNames.PICKUPSTICK,                  UI.PickupStick));
-
+            */
             foreach (UIGameEvent gameEvent in UIGameEventList)
             {
                 UIEventDictionary.Add(gameEvent.UIEventName,gameEvent);
@@ -75,6 +74,7 @@ namespace a_firelit_room
                 {
                     new TimedGameEvent(ETimedGameEventNames.GAMESTART,              GameStart,                      0000),
                     new TimedGameEvent(ETimedGameEventNames.LOOKAROUND,             LookAround,                     3500),
+                    new TimedGameEvent(ETimedGameEventNames.LOOKAROUND_OPTION, LookAroundButtonAppears, 40000),
                     new TimedGameEvent(ETimedGameEventNames.FINDMATCHSTICKS,        FindMatchSticks,                9500),
                     new TimedGameEvent(ETimedGameEventNames.LIGHTMATCHSTICK_OPTION, LightmatchstickButtonAppears,   9500),
                 },

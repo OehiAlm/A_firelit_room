@@ -59,7 +59,7 @@ namespace a_firelit_room
             return new SolidColorBrush(Color.FromArgb(opacity,red,green,blue));
         }
 
-        internal Panel CreateMainButtonPanel (string Name)
+        internal Panel CreateMainButtonPanel ()
         {
             Panel MainButtonPanel = new StackPanel()
             {
@@ -74,9 +74,9 @@ namespace a_firelit_room
             return MainButtonPanel;
         }
 
-        internal TextBlock CreateTextOutputElement (string Name)
+        internal TextBlock CreateTextOutputPanel ()
         {
-            TextBlock TextOutputElement = new TextBlock()
+            TextBlock TextOutputPanel= new TextBlock()
             {
                 Name            = "TextOutputPanel",
                 Height          = WindowCanvas.Height,
@@ -87,8 +87,8 @@ namespace a_firelit_room
                 TextWrapping    = TextWrapping.Wrap,
             };
 
-            WindowCanvas.Children.Add(TextOutputElement);
-            return TextOutputElement;
+            WindowCanvas.Children.Add(TextOutputPanel);
+            return TextOutputPanel;
         }
 
         internal Button AddButton(string button_Name, string button_Content, Panel panel, Action<object, EventArgs> click_event, int width = 120, int height = 35)
@@ -202,6 +202,21 @@ namespace a_firelit_room
         /*/////////////////////////////////////////////
                         Event Actions
         ////////////////////////////////////////////*/
+
+        internal void LookAroundButtonClick(object sender, EventArgs args)
+        {
+            Button button = (Button)sender;
+            ButtonClicks[button]++;
+
+            switch (ButtonClicks[button])
+            {
+            case 1:
+                {
+                    AddTextToOutputBox("heyo");
+                    break;
+                }
+            }
+        }
 
         internal void KindleButtonClick (object sender, EventArgs args)
         {

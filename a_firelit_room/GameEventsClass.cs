@@ -61,13 +61,22 @@ namespace a_firelit_room
         {
             UI.AdjustWindowCanvasSize(500, 250);
             UI.SetWindowCanvasColor(Brushes.Black);
-            UI.CreateTextOutputElement("TextOutputPanel");
+            UI.CreateTextOutputPanel();
             UI.AddTextToOutputBox(TextManager.GetTexts(ETimedGameEventNames.GAMESTART));
         }
 
         void LookAround ()
         {
             UI.AddTextToOutputBox(TextManager.GetTexts(ETimedGameEventNames.LOOKAROUND));
+        }
+
+        void LookAroundButtonAppears ()
+        {
+            Panel WindowCanvas = UI.AdjustWindowCanvasSize(500, 500);
+            Panel MainButtonPanel = UI.CreateMainButtonPanel();
+            UI.AdjustTextOutputElementSize(WindowCanvas.Width - MainButtonPanel.Width, WindowCanvas.Height);
+
+            UI.AddButton("LookAroundButton", "Umgebung untersuchen", (Panel)UI.GetElementFromWindowCanvas("MainButtonPanel"), UI.LookAroundButtonClick);
         }
 
         void FindMatchSticks ()
@@ -77,9 +86,6 @@ namespace a_firelit_room
 
         void LightmatchstickButtonAppears ()
         {
-            Panel tempWindowCanvas = UI.AdjustWindowCanvasSize(500, 500);
-            Panel tempMainButtonPanel = UI.CreateMainButtonPanel("MainButtonPanel");
-            UI.AdjustTextOutputElementSize(tempWindowCanvas.Width - tempMainButtonPanel.Width, tempWindowCanvas.Height);
             UI.AddButton("KindleButton","Streichholz anstecken", (Panel)UI.GetElementFromWindowCanvas("MainButtonPanel"), UI.KindleButtonClick);
         }
 

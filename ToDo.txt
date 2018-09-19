@@ -7,7 +7,7 @@ Tier 0 -> (Errors auflösen)
 
 Tier 1 -> (Wichtigste Gameplay Features)
 ::::::
-
+- Button: 'Umgebung untersuchen' einführen
 
 
 
