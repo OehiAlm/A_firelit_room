@@ -50,6 +50,11 @@ namespace a_firelit_room
             throw new KeyNotFoundException("Framework Element Name: '" + Name + "' not found in WindowCanvas Children Collection! Did you misstype it at the calling site?");
         }
 
+        /*internal Panel GetMainButtonPanel()
+        {
+            WindowCanvas.Children.GetEnumerator().
+        }*/
+
         /*/////////////////////////////////////////////
                     Create & Add UI Elements
         ////////////////////////////////////////////*/
@@ -98,7 +103,7 @@ namespace a_firelit_room
                 Name    = button_Name,
                 Content = button_Content,
                 Width   = width,
-                Height  = height
+                Height  = height,
             };
 
             button.Click += new RoutedEventHandler(click_event);
@@ -162,6 +167,17 @@ namespace a_firelit_room
                         Adjust UI Elements
         ////////////////////////////////////////////*/
 
+        internal FrameworkElement GetButtonFrom(string button_name, Panel panel)
+        {
+            foreach (FrameworkElement element in panel.Children)
+            {
+                if (button_name == element.Name)
+                    return element;
+            }
+
+            throw new KeyNotFoundException("Button called: '" + button_name + "' not found in '" + panel.Name + "' Children!");
+        }
+
         internal Panel AdjustWindowCanvasSize (double width = -1, double height = -1)
         {
             if (width >= 0)
@@ -212,7 +228,9 @@ namespace a_firelit_room
             {
             case 1:
                 {
-                    AddTextToOutputBox("heyo");
+                    AddTextToOutputBox("Du siehst dich um");
+                    GameFlow.Events.AdvanceToNextEventPhase();
+                    button.IsEnabled = false;
                     break;
                 }
             }

@@ -72,11 +72,15 @@ namespace a_firelit_room
             {
                 new [] 
                 {
-                    new TimedGameEvent(ETimedGameEventNames.GAMESTART,              GameStart,                      0000),
-                    new TimedGameEvent(ETimedGameEventNames.LOOKAROUND,             LookAround,                     3500),
-                    new TimedGameEvent(ETimedGameEventNames.LOOKAROUND_OPTION, LookAroundButtonAppears, 40000),
-                    new TimedGameEvent(ETimedGameEventNames.FINDMATCHSTICKS,        FindMatchSticks,                9500),
-                    new TimedGameEvent(ETimedGameEventNames.LIGHTMATCHSTICK_OPTION, LightmatchstickButtonAppears,   9500),
+                    new TimedGameEvent(ETimedGameEventNames.GAMESTART,              GameStart, 0000),
+                    new TimedGameEvent(ETimedGameEventNames.LOOKAROUND,             LookAround, 3500),
+                    new TimedGameEvent(ETimedGameEventNames.LOOKAROUND_OPTION, LookAroundButtonAppears, 4000),
+                },
+
+                new []
+                {
+                    new TimedGameEvent(ETimedGameEventNames.FINDMATCHSTICKS,        FindMatchSticks, 0000),
+                    new TimedGameEvent(ETimedGameEventNames.LIGHTMATCHSTICK_OPTION, LightmatchstickButtonAppears, 0000),
                 },
 
                 new []

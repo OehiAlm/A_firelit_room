@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
+﻿using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -76,7 +74,7 @@ namespace a_firelit_room
             Panel MainButtonPanel = UI.CreateMainButtonPanel();
             UI.AdjustTextOutputElementSize(WindowCanvas.Width - MainButtonPanel.Width, WindowCanvas.Height);
 
-            UI.AddButton("LookAroundButton", "Umgebung untersuchen", (Panel)UI.GetElementFromWindowCanvas("MainButtonPanel"), UI.LookAroundButtonClick);
+            UI.AddButton("LookAroundButton", "Umgebung untersuchen", (Panel)UI.GetElementFromWindowCanvas("MainButtonPanel"), UI.LookAroundButtonClick, 150);
         }
 
         void FindMatchSticks ()
@@ -86,7 +84,10 @@ namespace a_firelit_room
 
         void LightmatchstickButtonAppears ()
         {
-            UI.AddButton("KindleButton","Streichholz anstecken", (Panel)UI.GetElementFromWindowCanvas("MainButtonPanel"), UI.KindleButtonClick);
+            Button Kindlebutton = UI.AddButton("KindleButton","Streichholz anstecken", (Panel)UI.GetElementFromWindowCanvas("MainButtonPanel"), UI.KindleButtonClick);
+            Kindlebutton.Margin = new System.Windows.Thickness(0,5,0,5);
+
+            UI.GetButtonFrom("LookAroundButton", (Panel)UI.GetElementFromWindowCanvas("MainButtonPanel")).IsEnabled = true;
         }
 
         void InspectSurroundingArea()
