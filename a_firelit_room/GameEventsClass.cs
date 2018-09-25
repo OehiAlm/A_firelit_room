@@ -86,8 +86,6 @@ namespace a_firelit_room
         {
             Button Kindlebutton = UI.AddButton("KindleButton","Streichholz anstecken", (Panel)UI.GetElementFromWindowCanvas("MainButtonPanel"), UI.KindleButtonClick);
             Kindlebutton.Margin = new System.Windows.Thickness(0,5,0,5);
-
-            UI.GetButtonFrom("LookAroundButton", (Panel)UI.GetElementFromWindowCanvas("MainButtonPanel")).IsEnabled = true;
         }
 
         void InspectSurroundingArea()
@@ -97,7 +95,17 @@ namespace a_firelit_room
 
         void SearchSurroundingArea()
         {
-            UI.AddTextToOutputBox(TextManager.GetTexts(ETimedGameEventNames.SEARCHSURROUNDINGAREA));
+            UI.AddTextToOutputBox(TextManager.GetTexts(EUIEventNames.SEARCHSURROUNDINGAREA));
+        }
+
+        void MatchstickFades()
+        {
+            UI.AddTextToOutputBox(TextManager.GetTexts(ETimedGameEventNames.MATCHSTICKFADES));
+        }
+
+        void MatchstickGoesOut()
+        {
+            UI.AddTextToOutputBox(TextManager.GetTexts(ETimedGameEventNames.MATCHSTICKGOESOUT));
         }
     }
 }

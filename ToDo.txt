@@ -8,6 +8,7 @@ Tier 0 -> (Errors auflösen)
 Tier 1 -> (Wichtigste Gameplay Features)
 ::::::
 - 'Umgebung untersuchen'-Button situativ aktivieren / deaktivieren, je was neues rausgeben
+- Streichholz Flamme unabhängig von den Text-Phasen ausgehen lassen... 2tes System für unabhängige Timings vs. Erweitern des Aktuellen?
 
 
 

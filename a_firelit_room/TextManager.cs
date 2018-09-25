@@ -38,8 +38,8 @@ namespace a_firelit_room
           //{"LIGHTMATCHSTICK_OPTION",  new string[] {"Braucht kein Text?" } },
             {"LIGHTMATCHSTICK_ACTION",  new string[] {"Du nimmst ein Streichholz aus der Schachtel und schleifst es mit einer Bewegung an der Außenseite der Box","Das Streichholz ist abgebrochen...","Es sind noch 2 Streichhölzer übrig","Du versuchst es erneut","...","Das Streichholz brennt!", "Das letzte Streichholz in der Schachtel wurde anscheinend schon einmal benutzt","Es lässt sich nicht anzünden", "Die Schachtel ist jetzt leer"} },
             {"INSPECTSURROUNDINGAREA",  new string[] {"Der Schein des Streichholzes erleuchtet die unmittelbare Umgebung","Du siehst einen kleinen Haufen Hölzer","..." } },
-            {"SEARCHSURROUNDINGAREA",   new string[] {"...", "Das Streichholz ist ausgegangen", "...", Environment.NewLine,"Du suchst mit den Händen nach dem Holz auf dem Boden", "Du ertastest einen kleinen Spalt", "...Er ist warm" } },
-
+            {"MATCHSTICKFADES",   new string[] {"...", "Die Flamme des Streichholzes wird kleiner", "..."} },
+            {"MATCHSTICKGOESOUT",   new string[] {"Das Streichholz ist ausgegangen", "..."} },
         };
 
         /*/////////////////////////////////////////////

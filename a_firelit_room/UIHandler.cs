@@ -39,6 +39,23 @@ namespace a_firelit_room
                         Get methods
         ////////////////////////////////////////////*/
 
+        //use for storing a reference in code someplace, to later use for browsing through the Children Elements faster
+        internal byte GetIndexFromElementInWindowCanvas (string Name)
+        {
+            foreach (FrameworkElement element in WindowCanvas.Children)     
+            {
+                if (element.Name == Name)
+                    return (byte)WindowCanvas.Children.IndexOf(element);
+            }
+
+            throw new KeyNotFoundException("Framework Element Name: '" + Name + "' not found in WindowCanvas Children Collection! Are you sure its in there?");
+        }
+            
+        internal UIElement GetElementFromWindowCanvas(byte index)
+        {
+            return WindowCanvas.Children[index];    //fast, but only usable, if you know the index (and it never changes!!)
+        }
+
         internal FrameworkElement GetElementFromWindowCanvas(string Name)
         {
             foreach (FrameworkElement element in WindowCanvas.Children)     //only good, if the number of Children stays small (which it should - 4.4.18)
@@ -47,13 +64,8 @@ namespace a_firelit_room
                     return element;
             }
 
-            throw new KeyNotFoundException("Framework Element Name: '" + Name + "' not found in WindowCanvas Children Collection! Did you misstype it at the calling site?");
+            throw new KeyNotFoundException("Framework Element Name: '" + Name + "' not found in WindowCanvas Children Collection! Are you sure its in there?");
         }
-
-        /*internal Panel GetMainButtonPanel()
-        {
-            WindowCanvas.Children.GetEnumerator().
-        }*/
 
         /*/////////////////////////////////////////////
                     Create & Add UI Elements
@@ -167,12 +179,12 @@ namespace a_firelit_room
                         Adjust UI Elements
         ////////////////////////////////////////////*/
 
-        internal FrameworkElement GetButtonFrom(string button_name, Panel panel)
+        internal Button GetButtonFrom(string button_name, Panel panel)
         {
             foreach (FrameworkElement element in panel.Children)
             {
                 if (button_name == element.Name)
-                    return element;
+                    return (Button)element;
             }
 
             throw new KeyNotFoundException("Button called: '" + button_name + "' not found in '" + panel.Name + "' Children!");
@@ -230,33 +242,49 @@ namespace a_firelit_room
                 {
                     AddTextToOutputBox("Du siehst dich um");
                     GameFlow.Events.AdvanceToNextEventPhase();
-                    button.IsEnabled = false;
+                    break;
+                }
+
+            case 2:
+                {
+                    AddTextToOutputBox("Du siehst dich um");
+                    Button Kindlebutton = GetButtonFrom("KindleButton", (Panel)GetElementFromWindowCanvas("MainButtonPanel"));
+                    Kindlebutton.Content = "Hölzer anzünden";
+                    Kindlebutton.IsEnabled = true;
+
+                    GameFlow.Events.AdvanceToNextEventPhase();
                     break;
                 }
             }
+            button.IsEnabled = false;
         }
 
-        internal void KindleButtonClick (object sender, EventArgs args)
+
+        internal void KindleButtonClick(object sender, EventArgs args)
         {
             Button button = (Button)sender;
             ButtonClicks[button]++;
-            
+
             switch (ButtonClicks[button])
             {
-                case 1:
+            case 1:
                 {
                     AddTextToOutputBox(TextManager.GetTexts(EUIEventNames.LIGHTMATCHSTICK_ACTION, lines_of_text: 3));
                     break;
                 }
 
-                case 2:
+            case 2:
                 {
+
+                    byte MainButtonPanelIndex = GetIndexFromElementInWindowCanvas("MainButtonPanel");
+
                     AddTextToOutputBox(TextManager.GetTexts(EUIEventNames.LIGHTMATCHSTICK_ACTION, 3, 3));
-                    GameFlow.Events.AdvanceToNextEventPhase();
+                    GetButtonFrom("LookAroundButton", (Panel)GetElementFromWindowCanvas(MainButtonPanelIndex)).IsEnabled = true;
+                    GetButtonFrom("KindleButton", (Panel)GetElementFromWindowCanvas(MainButtonPanelIndex)).IsEnabled = false;
                     break;
                 }
 
-                case 3:
+            case 3:
                 {
                     AddTextToOutputBox(TextManager.GetTexts(EUIEventNames.LIGHTMATCHSTICK_ACTION, starting_from_index: 6));
                     button.IsEnabled = false;
@@ -264,35 +292,5 @@ namespace a_firelit_room
                 }
             }
         }
-
-        internal void PickupStick(object sender, EventArgs args)
-        {
-            //    Button button = (Button)sender;
-            //    ButtonClicks[button]++;
-
-            //    switch (ButtonClicks[button])
-            //    {
-            //    case 1:
-            //        {
-            //            AddTextToOutputBox(TextManager.GetTexts(EUIEventNames.LIGHTMATCHSTICK_ACTION, 2));
-            //            break;
-            //        }
-
-            //    case 2:
-            //        {
-            //            AddTextToOutputBox(TextManager.GetTexts(EUIEventNames.LIGHTMATCHSTICK_ACTION, 1, 2));
-            //            break;
-            //        }
-
-            //    case 3:
-            //        {
-            //            AddTextToOutputBox(TextManager.GetTexts(EUIEventNames.LIGHTMATCHSTICK_ACTION, 2, 3));
-            //            button.IsEnabled = false;
-            //            GameFlow.Events.AdvanceToNextEventPhase();
-            //            break;
-            //        }
-            //    }
-        }
-
     }
 }

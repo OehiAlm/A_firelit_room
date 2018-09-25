@@ -13,14 +13,15 @@ namespace a_firelit_room
         FINDMATCHSTICKS,
         LIGHTMATCHSTICK_OPTION,
         INSPECTSURROUNDINGAREA,
-        SEARCHSURROUNDINGAREA,
-
+        MATCHSTICKFADES,
+        MATCHSTICKGOESOUT,
     }
 
     enum EUIEventNames
     {
         LIGHTMATCHSTICK_ACTION,
-        PICKUPSTICK,
+        SEARCHSURROUNDINGAREA,
+        
     }
 
     struct UIGameEvent
@@ -72,22 +73,23 @@ namespace a_firelit_room
             {
                 new [] 
                 {
-                    new TimedGameEvent(ETimedGameEventNames.GAMESTART,              GameStart, 0000),
-                    new TimedGameEvent(ETimedGameEventNames.LOOKAROUND,             LookAround, 3500),
-                    new TimedGameEvent(ETimedGameEventNames.LOOKAROUND_OPTION, LookAroundButtonAppears, 4000),
+                    new TimedGameEvent(ETimedGameEventNames.GAMESTART,              GameStart,                      0000),
+                    new TimedGameEvent(ETimedGameEventNames.LOOKAROUND,             LookAround,                     3500),
+                    new TimedGameEvent(ETimedGameEventNames.LOOKAROUND_OPTION, LookAroundButtonAppears,             4000),
                 },
 
                 new []
                 {
-                    new TimedGameEvent(ETimedGameEventNames.FINDMATCHSTICKS,        FindMatchSticks, 0000),
-                    new TimedGameEvent(ETimedGameEventNames.LIGHTMATCHSTICK_OPTION, LightmatchstickButtonAppears, 0000),
+                    new TimedGameEvent(ETimedGameEventNames.FINDMATCHSTICKS,        FindMatchSticks,                0000),
+                    new TimedGameEvent(ETimedGameEventNames.LIGHTMATCHSTICK_OPTION, LightmatchstickButtonAppears,   0500),
+
                 },
 
                 new []
                 {
-                    new TimedGameEvent(ETimedGameEventNames.INSPECTSURROUNDINGAREA, InspectSurroundingArea,         2000),
-                    new TimedGameEvent(ETimedGameEventNames.SEARCHSURROUNDINGAREA,  SearchSurroundingArea,          6000),
-
+                    new TimedGameEvent(ETimedGameEventNames.INSPECTSURROUNDINGAREA, InspectSurroundingArea,         1000),
+                    new TimedGameEvent(ETimedGameEventNames.MATCHSTICKFADES,        MatchstickFades,                4000),
+                    new TimedGameEvent(ETimedGameEventNames.MATCHSTICKGOESOUT,      MatchstickGoesOut,              7000),
                 },
             };
             TimedGameEventsArray = timedGameEventsArray;
